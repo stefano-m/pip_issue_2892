@@ -1,0 +1,7 @@
+*~
+*.py[cod]
+dist
+build
+node_modules
+*.egg-info
+
