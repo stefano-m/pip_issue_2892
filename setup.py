@@ -18,6 +18,13 @@ class install(_install):
         subprocess.check_call(['npm', 'install'], shell=(sys.platform == 'win32'))
         _install.run(self)
 
+        # Work around pip issue 2892 (Windows long path names)
+        # https://github.com/pypa/pip/issues/2892
+        if sys.platform == 'win32':
+            for m in os.listdir('node_modules'):
+                if not m.startswith('.'):
+                    subprocess.check_call(['npm', 'uninstall', m], shell=True)
+
 
 setup(
     cmdclass={
